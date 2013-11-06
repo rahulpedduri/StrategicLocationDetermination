@@ -219,4 +219,5 @@ pip-log.txt
 .properties
 build.xml
 nbproject/
+lib/
 
