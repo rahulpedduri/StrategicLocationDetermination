@@ -215,9 +215,12 @@ pip-log.txt
 .mr.developer.cfg
 
 #project specific ignores
-.class
+*.class
 .properties
 build.xml
 nbproject/
 lib/
-
+build/
+.classpath
+.project
+.settings
