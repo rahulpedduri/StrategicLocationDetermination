@@ -10,7 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.Reader; 
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -62,7 +62,8 @@ public class Census {
 
     public static void main(String[] args) throws IOException {
         try {
-            getPlaces("NC");
+//            getPlaces("NC");
+            getStates();
         } catch (Exception ex) {
             Logger.getLogger(Census.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,6 +84,7 @@ public class Census {
                 String code = (String) data.get("StatePostal");
                 states.add(new State(name, code));
             }
+           
 
         } catch (IOException ex) {
             Logger.getLogger(Census.class.getName()).log(Level.SEVERE, null, ex);
