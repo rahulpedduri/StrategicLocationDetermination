@@ -15,11 +15,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Strategic Location Determination</title>
     </head>
-    <body onLoad="javascript:loadStates()">
+    <body onload="javascript:loadStates()">
         <div>
-            <label>State: </label><select id="select_state" />
+            <label>State: </label><select id="select_state" >
+            </select>            
+        </div>
+        
+        <div id="places" style="display:none" >
+            <label>Places: </label> <select id="select_place" ></select>
             
         </div>
-         
+        <input type="button" style="display: none" value="Add more"/>
     </body>
 </html>

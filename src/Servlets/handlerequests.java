@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import beans.*;
 import java.util.ArrayList;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import util.Census;
 /**
  *
@@ -25,11 +27,45 @@ public class handlerequests extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String requestType=request.getParameter("requestType");
+        if(requestType.equals("states")){
         ArrayList<State> state;
         state=(ArrayList<State>)Census.getStates();
+        response.setContentType("application/json");
         PrintWriter out=response.getWriter();
-        out.println(state);
+        JSONObject obj=new JSONObject();
+        JSONArray arr;
+        for(int i=0;i<state.size();i++)
+        {
+            arr = new JSONArray();
+            arr.add(0,state.get(i).getCode());
+            arr.add(1,state.get(i).getName());
+            obj.put(i,arr);
+        }
+        out.println(obj);
        out.close();
+        }
+        
+        else
+        {
+        String state=request.getParameter("place");
+        ArrayList<Place> place;
+        place=(ArrayList<Place>)Census.getPlaces(state);
+        response.setContentType("application/json");
+        PrintWriter out=response.getWriter();
+        JSONObject obj=new JSONObject();
+        JSONArray arr;
+        for(int i=0;i<place.size();i++)
+        {
+            arr = new JSONArray();
+            arr.add(0,place.get(i).getCode());
+            arr.add(1,place.get(i).getName());
+            obj.put(i,arr);
+        }
+        out.println(obj);
+       out.close();
+        }
         
     }
 
