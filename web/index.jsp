@@ -16,8 +16,10 @@
         <title>Strategic Location Determination</title>
     </head>
     <body onload="javascript:loadStates()">
+        <div id="content">
+        <div id="maindiv">
         <div>
-            <label>State: </label><select id="select_state" >
+            <label>State: </label><select id="select_state" class="states">
             </select>            
         </div>
         
@@ -25,6 +27,11 @@
             <label>Places: </label> <select id="select_place" ></select>
             
         </div>
-        <input type="button" style="display: none" value="Add more"/>
+            <hr>
+            </div>
+            </div>
+        <input type="button" style="display: none" value="Add more" id="btn_place" class="btn"/>
+        <input type="submit" style="display: none" value="Submit" id="btn_submit" class="btn" onclick="javascript:submitrequest()"/>
+
     </body>
 </html>
