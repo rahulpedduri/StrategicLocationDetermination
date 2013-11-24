@@ -62,7 +62,8 @@ public class Census {
 
     public static void main(String[] args) throws IOException {
         try {
-            getPlaces("NC");
+//            getPlaces("NC");
+            getStates();
         } catch (Exception ex) {
             Logger.getLogger(Census.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,6 +84,7 @@ public class Census {
                 String code = (String) data.get("StatePostal");
                 states.add(new State(name, code));
             }
+           
 
         } catch (IOException ex) {
             Logger.getLogger(Census.class.getName()).log(Level.SEVERE, null, ex);
