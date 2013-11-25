@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 package Servlets;
 
 import beans.Place;
@@ -22,24 +22,26 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import util.Census;
+import util.Goodness;
+import util.PricesFromTruliaAPI;
 import util.ReverseGeocoding;
 
 /**
- *
- * @author Phani Rahul
- */
+*
+* @author Phani Rahul
+*/
 public class ProcessInput extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+* Processes requests for both HTTP
+* <code>GET</code> and
+* <code>POST</code> methods.
+*
+* @param request servlet request
+* @param response servlet response
+* @throws ServletException if a servlet-specific error occurs
+* @throws IOException if an I/O error occurs
+*/
     private HttpSession session = null;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -95,7 +97,7 @@ public class ProcessInput extends HttpServlet {
                     JSONArray jsonArray = (JSONArray) new JSONParser().parse((String) request.getParameter("maps_json"));
                     maps = new ArrayList<SelectedLocationMap>();
                     for (Object json : jsonArray) {
-                        String latitude =  ((JSONObject) json).get("ob")+"";
+                        String latitude = ((JSONObject) json).get("ob")+"";
                         String longitude = ((JSONObject) json).get("pb")+"";
                         SelectedLocationMap m = new SelectedLocationMap(latitude, longitude);
                         maps.add(m);
@@ -121,6 +123,22 @@ public class ProcessInput extends HttpServlet {
                     Logger.getLogger(ProcessInput.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
+                ArrayList<Place> places = (ArrayList<Place>) session.getAttribute("selected");
+                
+                for (Place p : places) {
+                	
+                	String stateName  = ReverseGeocoding.getState(new SelectedLocationMap(p.getLatitude(), p.getLongitude()));
+                	p.setCost(PricesFromTruliaAPI.getPrice(p.getCode(), stateName));
+                
+                }
+
+                Goodness goodness=new Goodness(places);
+                goodness.computeCustomerIndicator();
+                goodness.computeCompetitorIndicator();
+                places= goodness.computeRealEstateIndicator();
+                session.setAttribute("selected", places);
+
             response.sendRedirect("result.jsp");
             
 
@@ -133,14 +151,14 @@ public class ProcessInput extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+* Handles the HTTP
+* <code>GET</code> method.
+*
+* @param request servlet request
+* @param response servlet response
+* @throws ServletException if a servlet-specific error occurs
+* @throws IOException if an I/O error occurs
+*/
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -148,14 +166,14 @@ public class ProcessInput extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+* Handles the HTTP
+* <code>POST</code> method.
+*
+* @param request servlet request
+* @param response servlet response
+* @throws ServletException if a servlet-specific error occurs
+* @throws IOException if an I/O error occurs
+*/
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -163,12 +181,13 @@ public class ProcessInput extends HttpServlet {
     }
 
     /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+* Returns a short description of the servlet.
+*
+* @return a String containing servlet description
+*/
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 }
+
