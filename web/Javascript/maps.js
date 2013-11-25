@@ -10,7 +10,7 @@ var lats = [];
 function initialize() {
   var haightAshbury = new google.maps.LatLng(37.7699298, -122.4469157);
   var mapOptions = {
-    zoom: 12,
+    zoom: 6,
     center: haightAshbury,
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
@@ -56,3 +56,26 @@ function deleteMarkers() {
   lats=[];
 }
 
+function makeMap(lat, long, m){
+    var loc = new google.maps.LatLng(lat, long);
+  var mapOptions = {
+    zoom: 12,
+    center: loc,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var map = new google.maps.Map(m,
+      mapOptions);
+     
+  
+}
+function makeMapsForResults(){
+    $(".map").each(function(){
+       var lat = $(this).attr('lat');
+       var long = $(this).attr('long');
+       var m = this;
+       makeMap(lat, long, m)
+       
+    });
+}
+
+google.maps.event.addDomListener(window, 'load', makeMapsForResults);
