@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import beans.*;
 import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
+import org.apache.catalina.Session;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import util.Census;
@@ -24,10 +26,10 @@ import util.Census;
 public class handlerequests extends HttpServlet {
 
     
-
+private HttpSession session=null;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        session = (HttpSession) request.getSession();
         String requestType=request.getParameter("requestType");
         if(requestType.equals("states")){
         ArrayList<State> state;

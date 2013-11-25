@@ -11,7 +11,7 @@ var p = 0;
 function loadStates()
 {
 
-
+initialize();
 
 
     $.ajax({
@@ -107,4 +107,7 @@ function dropdowneventlistner(){
                         jsonData['state']=$(this).val();
                    }
                 });
+                $("#field_json").val(JSON.stringify(jsonArray));
+                //sending maps data to the server
+                $("#maps_json").val(JSON.stringify(lats));
             }

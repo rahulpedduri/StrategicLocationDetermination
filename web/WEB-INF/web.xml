@@ -8,9 +8,17 @@
             <param-value>handlerequests</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>ProcessInput</servlet-name>
+        <servlet-class>Servlets.ProcessInput</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handlerequests</servlet-name>
         <url-pattern>/handlerequests</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProcessInput</servlet-name>
+        <url-pattern>/ProcessInput</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
