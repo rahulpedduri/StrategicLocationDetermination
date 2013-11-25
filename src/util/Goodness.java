@@ -55,7 +55,7 @@ public class Goodness {
     	
     	for(Place location : locations) {
     		double value = 0;
-    		value = Integer.parseInt(location.getPopulation())/maxPop;
+    		value = ((double)Integer.parseInt(location.getPopulation()))/maxPop;
     		location.setCustomerGoodness(value);
     	}
     	
