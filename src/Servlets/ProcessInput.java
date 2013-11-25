@@ -21,6 +21,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import util.Census;
+import util.ReverseGeocoding;
 
 /**
  *
@@ -73,7 +75,7 @@ public class ProcessInput extends HttpServlet {
 
                         //looking for it in dump
                         for (Place p : dump) {
-                            if (p.getCode().equalsIgnoreCase(place)) {
+                            if (p.getCode().equalsIgnoreCase(place) || p.getName().equalsIgnoreCase(place)) {
                                 if (!selected.contains(p)) {
                                     selected.add(p);
                                 }
@@ -93,18 +95,37 @@ public class ProcessInput extends HttpServlet {
                     JSONArray jsonArray = (JSONArray) new JSONParser().parse((String) request.getParameter("maps_json"));
                     maps = new ArrayList<SelectedLocationMap>();
                     for (Object json : jsonArray) {
-                        String latitude = (String) ((JSONObject) json).get("ob");
-                        String longitude = (String) ((JSONObject) json).get("pb");
-                        maps.add(new SelectedLocationMap(latitude, longitude));
+                        String latitude =  ((JSONObject) json).get("ob")+"";
+                        String longitude = ((JSONObject) json).get("pb")+"";
+                        SelectedLocationMap m = new SelectedLocationMap(latitude, longitude);
+                        maps.add(m);
+                        try {
+                            String state = ReverseGeocoding.getState(m);
+                            ArrayList<Place> pl = (ArrayList<Place>) Census.getPlaces(state);
+                            String place = ReverseGeocoding.getPlace(m);
+                            for (Place p : pl) {
+                                if (p.getCode().equalsIgnoreCase(place)|| p.getName().equalsIgnoreCase(place)) {
+                                    if (!selected.contains(p)) {
+                                        selected.add(p);
+                                    }
+                                }
+                            }
+
+                        } catch (Exception ex) {
+                            Logger.getLogger(ProcessInput.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
 
 
                 } catch (ParseException ex) {
                     Logger.getLogger(ProcessInput.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-
             }
+            response.sendRedirect("result.jsp");
+            
+
+        }catch(Exception e){
+            Logger.getLogger(ProcessInput.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             out.close();
         }
