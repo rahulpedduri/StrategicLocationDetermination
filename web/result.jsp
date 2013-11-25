@@ -14,12 +14,29 @@
             .map{
                 width: 500px;
                 height: 135px;
+                position: relative;
+                top: -31px;
+                left: 500px;
             }
+            .map:after{
+                content: " ";
+
+            }
+            li{
+               
+                padding: 14px;
+background: darkseagreen;
+margin-bottom: 16px;
+            }
+
         </style>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
         <script src="Javascript/maps.js"></script>
+        <script type="text/javascript">
+            google.maps.event.addDomListener(window, 'load', makeMapsForResults);
+        </script>
     </head>
     <body>
         <h1>Loaded</h1>
@@ -30,7 +47,8 @@
                     <span>Name : ${loc.code}</span>
                     <br/>
                     <span>Population : ${loc.population}</span>
-                    <div id="" class="map" lat="${loc.latitude}" long="${loc.longitude})" > </div>
+                    <div id="" class="map" lat="${loc.latitude}" long="${loc.longitude}" > </div>
+                    <a href="Detail?name=${loc.name}" >more..</a>
                     <%-- TODO remaining values to be populated --%>
                 </li>
             </c:forEach>

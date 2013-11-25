@@ -30,6 +30,7 @@ function addMarker(location) {
   });
   markers.push(marker);
   lats.push(location);
+  $("#btn_submit").show();
 }
 
 // Sets the map on all markers in the array.
@@ -65,6 +66,10 @@ function makeMap(lat, long, m){
   };
   var map = new google.maps.Map(m,
       mapOptions);
+      new google.maps.Marker({
+        map: map,
+        position: loc,
+    })
      
   
 }
@@ -73,9 +78,22 @@ function makeMapsForResults(){
        var lat = $(this).attr('lat');
        var long = $(this).attr('long');
        var m = this;
-       makeMap(lat, long, m)
+       
+       makeMap(lat, long, m);
+       
        
     });
 }
 
-google.maps.event.addDomListener(window, 'load', makeMapsForResults);
+function mapForDetail(){
+     $(".map").each(function(){
+       var lat = $(this).attr('lat');
+       var long = $(this).attr('long');
+       var m = this;
+       
+       makeMap(lat, long, m);
+       //set competitor's markers
+       
+       
+    });
+}

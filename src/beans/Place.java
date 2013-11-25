@@ -4,7 +4,13 @@
  */
 package beans;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.JSONValue;
 
 import util.CompetitorsFromPlacesAPI;
 
@@ -12,7 +18,8 @@ import util.CompetitorsFromPlacesAPI;
  *
  * @author Phani Rahul
  */
-public class Place {
+public class Place implements Serializable{
+
     private String name;
     private String code;
     private String latitude;
@@ -24,51 +31,70 @@ public class Place {
     private double costGoodness;
     private List<Competitors> competitors;
     private double zvalue;
+    private String competitorJSON;
+
+    public String getCompetitorJSON() {
+        StringWriter out = new StringWriter();
+        try {
+            JSONValue.writeJSONString(getCompetitors(), out);
+        } catch (IOException ex) {
+            Logger.getLogger(Place.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        competitorJSON = out.toString();
+        return competitorJSON;
+    }
+
+    public void setCompetitorJSON(String competitorJSON) {
+        this.competitorJSON = competitorJSON;
+    }
+    
+
     public double getZvalue() {
-		return zvalue;
-	}
+        return zvalue;
+    }
 
-	public void setZvalue(double zvalue) {
-		this.zvalue = zvalue;
-	}
+    public void setZvalue(double zvalue) {
+        this.zvalue = zvalue;
+    }
 
-	public Place(String name, String code, String latitude, String longitude, String population) {
+
+    public Place(String name, String code, String latitude, String longitude, String population) {
         this.name = name;
         this.code = code;
         this.latitude = latitude;
         this.longitude = longitude;
         this.population = population;
-        this.custGoodness = 0; 
+        this.custGoodness = 0;
         this.compGoodness = 0;
         this.costGoodness = 0;
     }
-    
+
     public Place() {
     }
 
     public double getCustomerGoodness() {
-		return custGoodness;
-	}
+        return custGoodness;
+    }
 
-	public void setCustomerGoodness(double custGoodness) {
-		this.custGoodness = custGoodness;
-	}
-	
-	public double getCompetitorGoodness() {
-		return compGoodness;
-	}
+    public void setCustomerGoodness(double custGoodness) {
+        this.custGoodness = custGoodness;
+    }
 
-	public void setCompetitorGoodness(double compGoodness) {
-		this.compGoodness = compGoodness;
-	}
+    public double getCompetitorGoodness() {
+        return compGoodness;
+    }
 
-	public double getCostGoodness() {
-		return costGoodness;
-	}
+    public void setCompetitorGoodness(double compGoodness) {
+        this.compGoodness = compGoodness;
+    }
 
-	public void setCostGoodness(double costGoodness) {
-		this.costGoodness = costGoodness;
-	}
+    public double getCostGoodness() {
+        return costGoodness;
+    }
+
+    public void setCostGoodness(double costGoodness) {
+        this.costGoodness = costGoodness;
+    }
 
     public String getName() {
         return name;
@@ -87,14 +113,14 @@ public class Place {
     }
 
     public List<Competitors> getCompetitors() {
-		return competitors;
-	}
+        return competitors;
+    }
 
-	public void setCompetitors(List<Competitors> competitors) {
-		this.competitors = (List<Competitors>) new CompetitorsFromPlacesAPI().getCompetitors(latitude, longitude);
-	}
+    public void setCompetitors(List<Competitors> competitors) {
+        this.competitors = (List<Competitors>) new CompetitorsFromPlacesAPI().getCompetitors(latitude, longitude);
+    }
 
-	public String getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
@@ -105,16 +131,16 @@ public class Place {
     public String getLongitude() {
         return longitude;
     }
-    
+
     public int getCost() {
-		return cost;
-	}
+        return cost;
+    }
 
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
 
-	public void setLongitude(String longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
@@ -129,10 +155,10 @@ public class Place {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 47 * hash + (this.code != null ? this.code.hashCode() : 0);
+        hash = 47 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -142,7 +168,7 @@ public class Place {
             return false;
         }
         final Place other = (Place) obj;
-        if ((this.code == null) ? (other.code != null) : !this.code.equals(other.code)) {
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
         return true;
@@ -151,5 +177,5 @@ public class Place {
     @Override
     public String toString() {
         return "Place{" + "name=" + name + ", code=" + code + ", latitude=" + latitude + ", longitude=" + longitude + ", population=" + population + '}';
-    }   
+    }
 }

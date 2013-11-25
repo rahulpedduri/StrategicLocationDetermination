@@ -12,6 +12,10 @@
         <servlet-name>ProcessInput</servlet-name>
         <servlet-class>Servlets.ProcessInput</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Detail</servlet-name>
+        <servlet-class>Servlets.Detail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handlerequests</servlet-name>
         <url-pattern>/handlerequests</url-pattern>
@@ -19,6 +23,10 @@
     <servlet-mapping>
         <servlet-name>ProcessInput</servlet-name>
         <url-pattern>/ProcessInput</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Detail</servlet-name>
+        <url-pattern>/Detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
