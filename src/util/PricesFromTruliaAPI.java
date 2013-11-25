@@ -30,20 +30,35 @@ public class PricesFromTruliaAPI {
 	static String parserValue="";
 	
 	public static List<Property> readXMLFromUrl(String url) throws IOException, Exception {
-        InputStream is = new URL(url).openStream();
+        
+		InputStream is = null;
+		
         try {
+        	
+        	is = new URL(url).openStream();
+        	
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             
             DefaultHandler dHandler = new DefaultHandler() {
 
 				@Override
-				public void characters(char[] ch, int start, int length)
-						throws SAXException {
+				public void characters(char[] ch, int start, int length) {
 					// TODO Auto-generated method stub
-					super.characters(ch, start, length);
+					try {
+						super.characters(ch, start, length);
+						
+						parserValue = new String(ch, start, length);
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						//e.printStackTrace();
+						
+						parserValue = "0";
+						
+					}
 					
-					parserValue = new String(ch, start, length);
+					
 					
 				}
 
@@ -108,8 +123,8 @@ public class PricesFromTruliaAPI {
 		
 	}
 	
-	public static void main(String[] args) throws IOException, Exception {
+	/*public static void main(String[] args) throws IOException, Exception {
 		getPrice("Charlotte", "NC");
-	}
+	}*/
 
 }
