@@ -101,7 +101,9 @@ public class PricesFromTruliaAPI {
             
             return propertyList;
             
-        } finally {
+        } catch(Exception e) {
+        	return propertyList;
+        }finally {
             is.close();
         }
     }
