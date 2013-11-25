@@ -24,9 +24,9 @@ import beans.Competitors;
 
 public class CompetitorsFromPlacesAPI {
 
-    private static final String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"+
-    								"key=AIzaSyD71X-H1EzIK3fKgk_pIQ9QfBS6-OVlURo&location=35.2269,-80.8433&"+
-    								"radius=200&sensor=false&types=clothing_store";
+    
+	private static String mylat;
+	private static String mylng;
     
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -51,17 +51,24 @@ public class CompetitorsFromPlacesAPI {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         try {
             getCompetitors("NC");
         } catch (Exception ex) {
             Logger.getLogger(Census.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
+    }*/
 
-    public static List<Competitors> getCompetitors(String stateCode) {
+    public static List<Competitors> getCompetitors(String lat, String lng) {
         
+    	mylat = lat;
+    	mylng = lng;
+    	
+    	final String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"+
+				"key=AIzaSyD71X-H1EzIK3fKgk_pIQ9QfBS6-OVlURo&location=" + 
+				mylat + "," + mylng + "&radius=200&sensor=false&types=clothing_store";
+    	
         ArrayList<Competitors> places = new ArrayList<Competitors>();
         try {
 

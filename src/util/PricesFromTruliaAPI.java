@@ -91,7 +91,7 @@ public class PricesFromTruliaAPI {
         }
     }
 	
-	public static void getPrice(String cityName, String stateName) throws IOException, Exception {
+	public static int getPrice(String cityName, String stateName) throws IOException, Exception {
 		
 		String libName = "TruliaStats";
 		String funcName = "getCityStats";
@@ -100,9 +100,11 @@ public class PricesFromTruliaAPI {
 		
 		List<Property> prices = readXMLFromUrl(url);
 		
-		for(Property p : prices){
+		/*for(Property p : prices){
 			System.out.println(p.getType() +" : "+p.getAverageListingPrice());
-		}
+		}*/
+		
+		return Integer.parseInt(prices.get(0).getAverageListingPrice());
 		
 	}
 	

@@ -22,6 +22,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import util.Goodness;
+import util.PricesFromTruliaAPI;
+import util.ReverseGeocoding;
+
 /**
  *
  * @author Phani Rahul
@@ -41,7 +45,7 @@ public class ProcessInput extends HttpServlet {
     private HttpSession session = null;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         ArrayList<SelectedLocationField> list = null;
@@ -102,8 +106,22 @@ public class ProcessInput extends HttpServlet {
                 } catch (ParseException ex) {
                     Logger.getLogger(ProcessInput.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
+                ArrayList<Place> places = (ArrayList<Place>) session.getAttribute("selected");
+                
+                for (Place p : places) {
+                	
+                	String stateName  = ReverseGeocoding.getState(new SelectedLocationMap(p.getLatitude(), p.getLongitude()));
+                	p.setCost(PricesFromTruliaAPI.getPrice(p.getCode(), stateName));
+                
+                }
 
-
+                Goodness goodness=new Goodness(places);
+                goodness.computeCustomerIndicator();
+                goodness.computeCompetitorIndicator();
+                places= goodness.computeRealEstateIndicator();
+                session.setAttribute("selected", places);
+                
             }
         } finally {
             out.close();
@@ -123,7 +141,12 @@ public class ProcessInput extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+			processRequest(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -138,7 +161,12 @@ public class ProcessInput extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+			processRequest(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
