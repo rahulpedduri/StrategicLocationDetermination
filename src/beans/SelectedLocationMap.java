@@ -53,5 +53,10 @@ public class SelectedLocationMap {
         }
         return true;
     }
+
+    public SelectedLocationMap(String latitude, String Longitude) {
+        this.latitude = latitude;
+        this.Longitude = Longitude;
+    }
     
 }
