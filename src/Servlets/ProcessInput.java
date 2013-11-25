@@ -22,6 +22,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import util.Census;
+import util.CompetitorsFromPlacesAPI;
 import util.Goodness;
 import util.PricesFromTruliaAPI;
 import util.ReverseGeocoding;
@@ -129,7 +130,8 @@ public class ProcessInput extends HttpServlet {
                 for (Place p : places) {
                 	
                 	String stateName  = ReverseGeocoding.getState(new SelectedLocationMap(p.getLatitude(), p.getLongitude()));
-                	p.setCost(PricesFromTruliaAPI.getPrice(p.getCode(), stateName));
+                        p.setCompetitors(CompetitorsFromPlacesAPI.getCompetitors(p.getLatitude(), p.getLongitude()));
+                	p.setCost(PricesFromTruliaAPI.getPrice(p.getName(), stateName));
                 
                 }
 

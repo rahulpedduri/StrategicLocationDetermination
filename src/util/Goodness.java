@@ -19,14 +19,16 @@ import beans.Place;
  */
 public class Goodness {
 	
-	static ArrayList<Place> locations;
-	static int maxPop = Integer.parseInt(locations.get(0).getPopulation());
+	ArrayList<Place> locations=new ArrayList<Place>();
+        int maxPop = 0;
 	double goodness;
-	static double maxCost = (double)locations.get(0).getCost();
+	double maxCost = 0.00;
 	
 	public Goodness(ArrayList<Place> locations) {
 		
 		this.locations = locations;
+                maxPop=Integer.parseInt(locations.get(0).getPopulation());
+                maxCost=(double)locations.get(0).getCost();
 		maxPop();
 		maxCost();
 		this.goodness = 0;
@@ -49,7 +51,7 @@ public class Goodness {
 		
 	}
 	
-    public static void computeCustomerIndicator(){
+    public  void computeCustomerIndicator(){
     	
     	for(Place location : locations) {
     		double value = 0;
@@ -59,7 +61,7 @@ public class Goodness {
     	
     }
     
-    public static void computeCompetitorIndicator(){
+    public  void computeCompetitorIndicator(){
     	
     	for(Place location : locations) {
     		
@@ -68,7 +70,7 @@ public class Goodness {
     		List<Competitors> competitors = location.getCompetitors();
     		Iterator<Competitors> compIter = competitors.iterator();
     		
-    		if(compIter.hasNext()) {
+    		while(compIter.hasNext()) {
     			double value = 0;
     			value = Math.pow(Double.parseDouble(location.getLatitude())-Double.parseDouble(compIter.next().getLatitude()),2);
     			value += Math.pow(Double.parseDouble(location.getLongitude())-Double.parseDouble(compIter.next().getLongitude()),2);
@@ -82,7 +84,7 @@ public class Goodness {
     	
     }
     
-    public static ArrayList<Place> computeRealEstateIndicator(){
+    public  ArrayList<Place> computeRealEstateIndicator(){
     	
     	for(Place location : locations) {
     		double value = 0;
@@ -94,7 +96,7 @@ public class Goodness {
         
     }
 
-	private static void setfinalValue() {
+	private  void setfinalValue() {
 		// TODO Auto-generated method stub
 		for(Place location : locations) {
     	 location.setZvalue(location.getCostGoodness()+location.getCompetitorGoodness()+location.getCustomerGoodness());

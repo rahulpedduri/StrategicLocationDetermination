@@ -79,13 +79,15 @@ public class ReverseGeocoding {
         JSONArray address = (JSONArray) result.get("address_components");
         Iterator<JSONObject> addressComps = address.iterator();
         
-        if(addressComps.hasNext()){
+        while(addressComps.hasNext()){
             JSONObject object = addressComps.next();
-            if(object.get("types") instanceof JSONArray){
-               JSONArray array = (JSONArray)addressComps.next().get("types");
+                if(object.get("types") instanceof JSONArray){
+                                      
+               JSONArray array = (JSONArray)object.get("types");
                String value = (String) array.get(0);
                if(value.equals("administrative_area_level_1")) {
                    state = (String)object.get("short_name");
+                   break;
                }
             }
             

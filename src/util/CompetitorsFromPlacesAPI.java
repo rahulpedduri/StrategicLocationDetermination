@@ -67,7 +67,7 @@ public class CompetitorsFromPlacesAPI {
     	
     	final String URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"+
 				"key=AIzaSyD71X-H1EzIK3fKgk_pIQ9QfBS6-OVlURo&location=" + 
-				mylat + "," + mylng + "&radius=200&sensor=false&types=clothing_store";
+				mylat + "," + mylng + "&radius=5000&sensor=false&types=clothing_store";
     	
         ArrayList<Competitors> places = new ArrayList<Competitors>();
         try {
@@ -82,8 +82,8 @@ public class CompetitorsFromPlacesAPI {
                 String address = (String) data.get("vicinity");
                 JSONObject geometry = (JSONObject) data.get("geometry");
                 JSONObject location = (JSONObject) geometry.get("location");
-                String latitude = (String) location.get("lat");
-                String longitude = (String) location.get("lng");
+                String latitude =  location.get("lat")+"";
+                String longitude =  location.get("lng")+"";
                 places.add(new Competitors(name, address, latitude, longitude));
             }
 
