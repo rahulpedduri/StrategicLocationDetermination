@@ -16,21 +16,6 @@ import beans.SelectedLocationMap;
 
 public class ReverseGeocoding {
 	
-	String lat;
-	String lng;
-	SelectedLocationMap map;
-	private static String url;
-	
-	public ReverseGeocoding(SelectedLocationMap map){
-		
-		this.map = map;
-		this.lat = this.map.getLatitude();
-		this.lng = this.map.getLongitude();
-		this.url = "http://maps.googleapis.com/maps/api/geocode/json?" + 
-					 "latlng=" + this.lat + "," + this.lng + "&sensor=false";
-	
-	}
-	
 	private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
@@ -53,8 +38,9 @@ public class ReverseGeocoding {
         }
     }
 
-	public static String getPlace() throws IOException, Exception {
-		
+	public static String getPlace(SelectedLocationMap map) throws IOException, Exception {
+		String url = "http://maps.googleapis.com/maps/api/geocode/json?" + 
+				 "latlng=" + map.getLatitude() + "," + map.getLongitude() + "&sensor=false";
         JSONObject json = readJsonFromUrl(url);
         
         JSONArray results = (JSONArray) json.get("results");
@@ -66,7 +52,10 @@ public class ReverseGeocoding {
 		
 	}
 	
-	public static String getState() throws IOException, Exception {
+	public static String getState(SelectedLocationMap map) throws IOException, Exception {
+		
+		String url = "http://maps.googleapis.com/maps/api/geocode/json?" + 
+				 "latlng=" + map.getLatitude() + "," + map.getLongitude() + "&sensor=false";
 		
         JSONObject json = readJsonFromUrl(url);
         
