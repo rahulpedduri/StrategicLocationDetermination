@@ -12,8 +12,8 @@
         <title>Detail</title>
         <style>
             .map{
-                width: 500px;
-                height: 135px;
+                width: 600px;
+                height: 400px;
                 position: relative;
                 top: -31px;
                 left: 500px;
@@ -50,8 +50,10 @@ margin-bottom: 16px;
                     <span>Population : ${p.population}</span>
                     <br/>
                     <span>Z Value : ${p.zvalue}</span>
-                     <div id="" class="map" lat="${p.latitude}" long="${p.longitude}" comp="${p.competitorJSON}" > </div>
-              
+                     <div id="map-canvas" class="map" lat="${p.latitude}" long="${p.longitude}"  > </div>
+                     <script>
+                         var comp='{p.competitorJSON}';
+                     </script>
                    
                      <%--TODO remaining values to be populated --%>
                

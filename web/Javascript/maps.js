@@ -85,7 +85,7 @@ function makeMapsForResults(){
        
     });
 }
-
+var a;
 function mapForDetail(){
      $(".map").each(function(){
        var lat = $(this).attr('lat');
@@ -94,7 +94,8 @@ function mapForDetail(){
        
        makeMap(lat, long, m);
        //set competitor's markers
-       
+       var json = $("#map-canvas").attr("comp");
+       a=json;
        //for each competitor
 //       new google.maps.Marker({
 //        map: map,

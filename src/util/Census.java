@@ -60,15 +60,7 @@ public class Census {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        try {
-//            getPlaces("NC");
-            getStates();
-        } catch (Exception ex) {
-            Logger.getLogger(Census.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+   
 
     public static List<State> getStates() {
         String url = URL + LESS + "?" + API_KEY + "&" + LEVEL + "=" + STATE_LEVEL;

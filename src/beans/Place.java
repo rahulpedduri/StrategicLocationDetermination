@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,11 +47,30 @@ public class Place implements Serializable{
 
     public String getCompetitorJSON() {
         StringWriter out = new StringWriter();
-        try {
-            JSONValue.writeJSONString(getCompetitors(), out);
-        } catch (IOException ex) {
-            Logger.getLogger(Place.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            JSONValue.writeJSONString(getCompetitors(), out);
+//        } catch (IOException ex) {
+//            Logger.getLogger(Place.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        Iterator<Competitors> itr = getCompetitors().iterator();
+            boolean comma = false;
+            out.append("[");
+            while(itr.hasNext()){
+                
+                Competitors c= itr.next();
+                if(comma){
+                    out.append(",");
+                }
+                comma=true;
+                out.append("{");
+                out.append("'lat' : ");
+                out.append(c.getLatitude());
+                out.append(",");
+                out.append("'long' : ");
+                out.append(c.getLongitude());
+                out.append("}");
+            }
+            out.append("]");
         competitorJSON = out.toString();
         return competitorJSON;
     }
@@ -130,11 +150,30 @@ public class Place implements Serializable{
     public void setCompetitors(List<Competitors> competitors) {
         this.competitors = (List<Competitors>) new CompetitorsFromPlacesAPI().getCompetitors(latitude, longitude);
         StringWriter out = new StringWriter();
-        try {
-            JSONValue.writeJSONString(getCompetitors(), out);
-        } catch (IOException ex) {
-            Logger.getLogger(Place.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+            Iterator<Competitors> itr = getCompetitors().iterator();
+            boolean comma = false;
+            out.append("[");
+            while(itr.hasNext()){
+                
+                Competitors c= itr.next();
+                if(comma){
+                    out.append(",");
+                }
+                comma=true;
+                out.append("{");
+                out.append("lat : ");
+                out.append(c.getLatitude());
+                out.append("long : ");
+                out.append(c.getLongitude());
+                out.append("}");
+            }
+            out.append("]");
+            
+          //  JSONValue.writeJSONString(getCompetitors(), out);
+//        } catch (IOException ex) {
+//            Logger.getLogger(Place.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         //getting only lats and longs
         competitorJSON = out.toString();
     }
