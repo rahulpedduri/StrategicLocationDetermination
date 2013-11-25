@@ -60,7 +60,7 @@ function deleteMarkers() {
 function makeMap(lat, long, m){
     var loc = new google.maps.LatLng(lat, long);
   var mapOptions = {
-    zoom: 12,
+    zoom: 6,
     center: loc,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
@@ -68,8 +68,9 @@ function makeMap(lat, long, m){
       mapOptions);
       new google.maps.Marker({
         map: map,
-        position: loc,
-    })
+        position: loc
+       
+    });
      
   
 }
@@ -94,6 +95,15 @@ function mapForDetail(){
        makeMap(lat, long, m);
        //set competitor's markers
        
+       //for each competitor
+//       new google.maps.Marker({
+//        map: map,
+//        position: loc,
+//        icon: {
+//      path: google.maps.SymbolPath.CIRCLE,
+//      scale: 2
+//    }
+//    });
        
     });
 }

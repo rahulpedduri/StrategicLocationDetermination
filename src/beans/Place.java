@@ -32,6 +32,16 @@ public class Place implements Serializable{
     private List<Competitors> competitors;
     private double zvalue;
     private String competitorJSON;
+    private String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+    
 
     public String getCompetitorJSON() {
         StringWriter out = new StringWriter();
@@ -118,6 +128,14 @@ public class Place implements Serializable{
 
     public void setCompetitors(List<Competitors> competitors) {
         this.competitors = (List<Competitors>) new CompetitorsFromPlacesAPI().getCompetitors(latitude, longitude);
+        StringWriter out = new StringWriter();
+        try {
+            JSONValue.writeJSONString(getCompetitors(), out);
+        } catch (IOException ex) {
+            Logger.getLogger(Place.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //getting only lats and longs
+        competitorJSON = out.toString();
     }
 
     public String getLatitude() {

@@ -10,6 +10,31 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Detail</title>
+        <style>
+            .map{
+                width: 500px;
+                height: 135px;
+                position: relative;
+                top: -31px;
+                left: 500px;
+            }
+            .map:after{
+                content: " ";
+
+            }
+            li{
+               
+                padding: 14px;
+background: darkseagreen;
+margin-bottom: 16px;
+            }
+
+        </style>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+        <script src="Javascript/maps.js"></script>
+
          <script type="text/javascript">
             google.maps.event.addDomListener(window, 'load', mapForDetail);
         </script>
@@ -17,18 +42,19 @@
     <body>
         <h1>In Detail</h1>
         
-        <c:set var="name" value="place" />
-        <c:forEach items="${sessionScope[name]}" var="p">
-                <li>
+        <c:set var="name" value="detail" />
+        <c:set var="p" value="${sessionScope[name]}" />
+                
                     <span>Name : ${p.code}</span>
                     <br/>
                     <span>Population : ${p.population}</span>
                     <br/>
-                    <span>Population : ${p.zvalue}</span>
-                    <div id="" class="map" lat="${p.latitude}" long="${p.longitude}" comp="${p.competitorJSON}" > </div>
+                    <span>Z Value : ${p.zvalue}</span>
+                     <div id="" class="map" lat="${p.latitude}" long="${p.longitude}" comp="${p.competitorJSON}" > </div>
+              
                    
-                    <%-- TODO remaining values to be populated --%>
-                </li>
-            </c:forEach>
+                     <%--TODO remaining values to be populated --%>
+               
+           
     </body>
 </html>

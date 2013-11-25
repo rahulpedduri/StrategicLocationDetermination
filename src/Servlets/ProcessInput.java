@@ -78,7 +78,7 @@ public class ProcessInput extends HttpServlet {
 
                         //looking for it in dump
                         for (Place p : dump) {
-                            if (p.getCode().equalsIgnoreCase(place) || p.getName().equalsIgnoreCase(place)) {
+                            if ( p.getName().equalsIgnoreCase(place) && p.getState().equalsIgnoreCase(state)) {
                                 if (!selected.contains(p)) {
                                     selected.add(p);
                                 }
@@ -107,7 +107,7 @@ public class ProcessInput extends HttpServlet {
                             ArrayList<Place> pl = (ArrayList<Place>) Census.getPlaces(state);
                             String place = ReverseGeocoding.getPlace(m);
                             for (Place p : pl) {
-                                if (p.getCode().equalsIgnoreCase(place)|| p.getName().equalsIgnoreCase(place)) {
+                                if ( p.getName().equalsIgnoreCase(place)) {
                                     if (!selected.contains(p)) {
                                         selected.add(p);
                                     }

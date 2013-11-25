@@ -111,7 +111,11 @@ public class Census {
                 String population = (String) data.get("Pop");
                 String latitude = (String) data.get("Lat");
                 String longitude = (String) data.get("Long");
-                places.add(new Place(name, code, latitude, longitude, population));
+                String state = (String) data.get("StatePostal");
+                Place p = new Place(name, code, latitude, longitude, population);
+                p.setState(state);
+                places.add(p);
+                
             }
 
         } catch (IOException ex) {
