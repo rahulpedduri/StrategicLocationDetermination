@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlets;
 
 import java.io.IOException;
@@ -15,65 +14,68 @@ import javax.servlet.http.HttpServletResponse;
 import beans.*;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
-import org.apache.catalina.Session;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import util.Census;
+
 /**
  *
  * @author san
  */
 public class handlerequests extends HttpServlet {
 
-    
-private HttpSession session=null;
+    private HttpSession session = null;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         session = (HttpSession) request.getSession();
-        String requestType=request.getParameter("requestType");
-        if(requestType.equals("states")){
-        ArrayList<State> state;
-        state=(ArrayList<State>)Census.getStates();
-        response.setContentType("application/json");
-        PrintWriter out=response.getWriter();
-        JSONObject obj=new JSONObject();
-        JSONArray arr;
-        for(int i=0;i<state.size();i++)
-        {
-            arr = new JSONArray();
-            arr.add(0,state.get(i).getCode());
-            arr.add(1,state.get(i).getName());
-            obj.put(i,arr);
+        String requestType = request.getParameter("requestType");
+        if (requestType.equals("states")) {
+            ArrayList<State> state;
+            state = (ArrayList<State>) Census.getStates();
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            JSONObject obj = new JSONObject();
+            JSONArray arr;
+            for (int i = 0; i < state.size(); i++) {
+                arr = new JSONArray();
+                arr.add(0, state.get(i).getCode());
+                arr.add(1, state.get(i).getName());
+                obj.put(i, arr);
+            }
+            out.println(obj);
+            out.close();
+        } else {
+            String state = request.getParameter("place");
+            ArrayList<Place> place;
+            place = (ArrayList<Place>) Census.getPlaces(state);
+            ArrayList<Place> p = (ArrayList<Place>)session.getAttribute("dump");
+            if (p == null) {
+                p = place;
+                session.setAttribute("dump", p);
+            }else{
+                p.addAll(place);
+            }
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            JSONObject obj = new JSONObject();
+            JSONArray arr;
+            for (int i = 0; i < place.size(); i++) {
+                arr = new JSONArray();
+                arr.add(0, place.get(i).getCode());
+                arr.add(1, place.get(i).getName());
+                obj.put(i, arr);
+            }
+            out.println(obj);
+            out.close();
         }
-        out.println(obj);
-       out.close();
-        }
-        
-        else
-        {
-        String state=request.getParameter("place");
-        ArrayList<Place> place;
-        place=(ArrayList<Place>)Census.getPlaces(state);
-        response.setContentType("application/json");
-        PrintWriter out=response.getWriter();
-        JSONObject obj=new JSONObject();
-        JSONArray arr;
-        for(int i=0;i<place.size();i++)
-        {
-            arr = new JSONArray();
-            arr.add(0,place.get(i).getCode());
-            arr.add(1,place.get(i).getName());
-            obj.put(i,arr);
-        }
-        out.println(obj);
-       out.close();
-        }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * Handles the HTTP
+     * <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -87,7 +89,8 @@ private HttpSession session=null;
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Handles the HTTP
+     * <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -109,5 +112,4 @@ private HttpSession session=null;
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

@@ -4,7 +4,9 @@
  */
 package Servlets;
 
+import beans.Place;
 import beans.SelectedLocationField;
+import beans.SelectedLocationMap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -36,52 +38,74 @@ public class ProcessInput extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    private HttpSession session=null;
+    private HttpSession session = null;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        ArrayList<SelectedLocationField> list=null;
-        
-         session = (HttpSession) request.getSession();
-        
+        ArrayList<SelectedLocationField> list = null;
+        ArrayList<SelectedLocationMap> maps = null;
+
+        session = (HttpSession) request.getSession();
+
+        ArrayList<Place> selected = (ArrayList<Place>) session.getAttribute("selected");
+        if (selected == null) {
+            selected = new ArrayList<Place>();
+            session.setAttribute("selected", selected);
+        }
+        ArrayList<Place> dump = (ArrayList<Place>) session.getAttribute("dump");
+        if (dump == null) {
+            dump = new ArrayList<Place>();
+            session.setAttribute("dump", dump);
+        }
+
         try {
             /* TODO output your page here. You may use following sample code. */
-            if(request.getParameter("field_json")!=null){
+            if (request.getParameter("field_json") != null) {
                 try {
-                    JSONArray jsonArray=(JSONArray) new JSONParser().parse((String)request.getParameter("field_json"));
-                    list= new ArrayList<SelectedLocationField>();
-                    for(Object json : jsonArray) {
-                        String state = (String)((JSONObject)json).get("state");
-                        String place = (String)((JSONObject)json).get("place");
+                    JSONArray jsonArray = (JSONArray) new JSONParser().parse((String) request.getParameter("field_json"));
+                    list = new ArrayList<SelectedLocationField>();
+                    for (Object json : jsonArray) {
+                        String state = (String) ((JSONObject) json).get("state");
+                        String place = (String) ((JSONObject) json).get("place");
                         list.add(new SelectedLocationField(state, place));
+
+                        //looking for it in dump
+                        for (Place p : dump) {
+                            if (p.getCode().equalsIgnoreCase(place)) {
+                                if (!selected.contains(p)) {
+                                    selected.add(p);
+                                }
+                            }
+                        }
                     }
-                        
+
 
                 } catch (ParseException ex) {
                     Logger.getLogger(ProcessInput.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-            }if(request.getParameter("maps_json")!=null){
-                
-                 try {
-                    JSONArray jsonArray=(JSONArray) new JSONParser().parse((String)request.getParameter("maps_json"));
-                    list= new ArrayList<SelectedLocationField>();
-                    for(Object json : jsonArray) {
-                        String latitude = (String)((JSONObject)json).get("ob");
-                        String longitude = (String)((JSONObject)json).get("pb");
-                        list.add(new SelectedLocationField(latitude, longitude));
-                    }
-                        
 
-                } catch (ParseException ex) {
-                    Logger.getLogger(ProcessInput.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                
             }
-        } finally {            
+            if (request.getParameter("maps_json") != null) {
+
+                try {
+                    JSONArray jsonArray = (JSONArray) new JSONParser().parse((String) request.getParameter("maps_json"));
+                    maps = new ArrayList<SelectedLocationMap>();
+                    for (Object json : jsonArray) {
+                        String latitude = (String) ((JSONObject) json).get("ob");
+                        String longitude = (String) ((JSONObject) json).get("pb");
+                        maps.add(new SelectedLocationMap(latitude, longitude));
+                    }
+
+
+                } catch (ParseException ex) {
+                    Logger.getLogger(ProcessInput.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
+            }
+        } finally {
             out.close();
         }
     }
