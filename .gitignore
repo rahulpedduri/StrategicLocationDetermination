@@ -216,12 +216,16 @@ pip-log.txt
 
 #project specific ignores
 *.class
+*.jar
+*.properties
 .properties
 build.xml
 nbproject/
+external/
 lib/
 build/
 .classpath
 .project
 .settings
 .gitignore
+.gitattributes
