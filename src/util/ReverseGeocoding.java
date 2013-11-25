@@ -21,9 +21,9 @@ public class ReverseGeocoding {
 	SelectedLocationMap map;
 	private static String url;
 	
-	public ReverseGeocoding(){
+	public ReverseGeocoding(SelectedLocationMap map){
 		
-		this.map = new SelectedLocationMap();
+		this.map = map;
 		this.lat = this.map.getLatitude();
 		this.lng = this.map.getLongitude();
 		this.url = "http://maps.googleapis.com/maps/api/geocode/json?" + 
