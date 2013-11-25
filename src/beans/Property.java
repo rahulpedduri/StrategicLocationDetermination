@@ -6,8 +6,8 @@ package beans;
 
 public class Property {
 	
-	private String type;
-	private String averageListingPrice;
+	private String type = "0";
+	private String averageListingPrice = "0";
 	
 	public String getType() {
 		return type;

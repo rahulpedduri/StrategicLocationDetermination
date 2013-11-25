@@ -7,6 +7,7 @@ package beans;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +30,7 @@ public class Place implements Serializable{
     private double custGoodness;
     private double compGoodness;
     private double costGoodness;
-    private List<Competitors> competitors;
+    private List<Competitors> competitors = new ArrayList<Competitors>();
     private double zvalue;
     private String competitorJSON;
     private String state;
