@@ -24,6 +24,7 @@ public class Place implements Serializable, Comparable<Place>{
     private String longitude;
     private String population;
     private int cost;
+    private int compSize;
     private double custGoodness;
     private double compGoodness;
     private double costGoodness;
@@ -36,8 +37,33 @@ public class Place implements Serializable, Comparable<Place>{
         return state;
     }
 
+    public int getCompSize() {
+        compSize = this.competitors.size();
+        return compSize;
+    }
+
+    public void setCompSize(int compSize) {
+        this.compSize = compSize;
+    }
+
     public void setState(String state) {
         this.state = state;
+    }
+
+    public double getCustGoodness() {
+        return custGoodness;
+    }
+
+    public void setCustGoodness(double custGoodness) {
+        this.custGoodness = custGoodness;
+    }
+
+    public double getCompGoodness() {
+        return compGoodness;
+    }
+
+    public void setCompGoodness(double compGoodness) {
+        this.compGoodness = compGoodness;
     }
     
 
@@ -165,6 +191,8 @@ public class Place implements Serializable, Comparable<Place>{
                 out.append("}");
             }
             out.append("]");
+            
+            compSize = this.competitors.size();
             
           //  JSONValue.writeJSONString(getCompetitors(), out);
 //        } catch (IOException ex) {

@@ -12,10 +12,10 @@
         <title>Detail</title>
         <style>
             .map{
-                width: 600px;
+                width: 681px;
                 height: 400px;
                 position: relative;
-                top: -31px;
+                top: -185px;
                 left: 500px;
             }
             .map:after{
@@ -23,10 +23,10 @@
 
             }
             li{
-               
+
                 padding: 14px;
-background: darkseagreen;
-margin-bottom: 16px;
+                background: darkseagreen;
+                margin-bottom: 16px;
             }
 
         </style>
@@ -35,26 +35,34 @@ margin-bottom: 16px;
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
         <script src="Javascript/maps.js"></script>
 
-         <script type="text/javascript">
+        <script type="text/javascript">
             google.maps.event.addDomListener(window, 'load', mapForDetail);
         </script>
     </head>
     <body>
         <h1>In Detail</h1>
-        
+
         <c:set var="name" value="detail" />
         <c:set var="p" value="${sessionScope[name]}" />
-                
-                    <span>Name : ${p.code}</span>
-                    <br/>
-                    <span>Population : ${p.population}</span>
-                    <br/>
-                    <span>Z Value : ${p.zvalue}</span>
-                     <div id="map-canvas" class="map" lat="${p.latitude}" long="${p.longitude}" comp="${p.competitorJSON}" > </div>
-              
-                   
-                     <%--TODO remaining values to be populated --%>
-               
-           
+
+        <span>Name : ${p.name}</span>
+        <br/>
+        <span>In Full : ${p.code}</span>
+        <br/>
+        <span>Population : ${p.population}</span>
+        <br/>
+        <span>Real Estate Cost : ${p.cost}</span>
+        <br/>
+        <span>Number of competitors : ${p.compSize}</span>
+        <br/>
+        <span>Z Value : ${p.zvalue}</span>
+        <br/>
+
+        <div id="map-canvas" class="map" lat="${p.latitude}" long="${p.longitude}" comp="${p.competitorJSON}" > </div>
+
+
+        <%--TODO remaining values to be populated --%>
+
+
     </body>
 </html>

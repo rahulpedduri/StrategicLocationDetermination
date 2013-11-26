@@ -40,7 +40,7 @@ margin-bottom: 16px;
     </head>
     <body>
         <h1>Loaded</h1>
-        <ul>
+        <ol>
             <c:set var="name" value="selected" />
             <c:forEach items="${sessionScope[name]}" var="loc">
                 <li>
@@ -52,6 +52,6 @@ margin-bottom: 16px;
                     <%-- TODO remaining values to be populated --%>
                 </li>
             </c:forEach>
-        </ul>
+        </ol>
     </body>
 </html>
