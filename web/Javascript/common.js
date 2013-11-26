@@ -111,3 +111,5 @@ function dropdowneventlistner(){
                 //sending maps data to the server
                 $("#maps_json").val(JSON.stringify(lats));
             }
+            
+              

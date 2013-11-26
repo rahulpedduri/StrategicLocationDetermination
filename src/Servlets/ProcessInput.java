@@ -10,6 +10,7 @@ import beans.SelectedLocationMap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -139,6 +140,8 @@ public class ProcessInput extends HttpServlet {
                 goodness.computeCustomerIndicator();
                 goodness.computeCompetitorIndicator();
                 places= goodness.computeRealEstateIndicator();
+                Collections.sort(places);
+                Collections.reverse(places);
                 session.setAttribute("selected", places);
 
             response.sendRedirect("result.jsp");

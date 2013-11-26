@@ -16,6 +16,10 @@
         <servlet-name>Detail</servlet-name>
         <servlet-class>Servlets.Detail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AJAXComp</servlet-name>
+        <servlet-class>Servlets.AJAXComp</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>handlerequests</servlet-name>
         <url-pattern>/handlerequests</url-pattern>
@@ -27,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>Detail</servlet-name>
         <url-pattern>/Detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AJAXComp</servlet-name>
+        <url-pattern>/AJAXComp</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

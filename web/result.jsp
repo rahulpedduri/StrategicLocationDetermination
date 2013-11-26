@@ -46,7 +46,7 @@ margin-bottom: 16px;
                 <li>
                     <span>Name : ${loc.code}</span>
                     <br/>
-                    <span>Population : ${loc.population}</span>
+                    <span>Overall Goodness Indicator : ${loc.zvalue}</span>
                     <div id="" class="map" lat="${loc.latitude}" long="${loc.longitude}" > </div>
                     <a href="Detail?name=${loc.name}" >more..</a>
                     <%-- TODO remaining values to be populated --%>

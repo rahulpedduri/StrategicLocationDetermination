@@ -50,10 +50,8 @@ margin-bottom: 16px;
                     <span>Population : ${p.population}</span>
                     <br/>
                     <span>Z Value : ${p.zvalue}</span>
-                     <div id="map-canvas" class="map" lat="${p.latitude}" long="${p.longitude}"  > </div>
-                     <script>
-                         var comp='{p.competitorJSON}';
-                     </script>
+                     <div id="map-canvas" class="map" lat="${p.latitude}" long="${p.longitude}" comp="${p.competitorJSON}" > </div>
+              
                    
                      <%--TODO remaining values to be populated --%>
                

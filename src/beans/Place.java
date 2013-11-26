@@ -4,15 +4,11 @@
  */
 package beans;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.simple.JSONValue;
 
 import util.CompetitorsFromPlacesAPI;
 
@@ -20,7 +16,7 @@ import util.CompetitorsFromPlacesAPI;
  *
  * @author Phani Rahul
  */
-public class Place implements Serializable{
+public class Place implements Serializable, Comparable<Place>{
 
     private String name;
     private String code;
@@ -63,10 +59,10 @@ public class Place implements Serializable{
                 }
                 comma=true;
                 out.append("{");
-                out.append("'lat' : ");
+                out.append("lat : ");
                 out.append(c.getLatitude());
                 out.append(",");
-                out.append("'long' : ");
+                out.append("long : ");
                 out.append(c.getLongitude());
                 out.append("}");
             }
@@ -235,5 +231,10 @@ public class Place implements Serializable{
     @Override
     public String toString() {
         return "Place{" + "name=" + name + ", code=" + code + ", latitude=" + latitude + ", longitude=" + longitude + ", population=" + population + '}';
+    }
+
+    @Override
+    public int compareTo(Place o) {
+        return (new Double(this.zvalue)).compareTo(o.zvalue);
     }
 }

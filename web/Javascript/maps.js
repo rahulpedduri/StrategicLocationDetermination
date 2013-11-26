@@ -108,3 +108,16 @@ function mapForDetail(){
        
     });
 }
+
+  $.ajax({
+        type: "POST",
+        url: "/Strategic_Location_Determination/AJAXComp",
+        dataType: "json"
+    })
+            .done(function(response)
+            {
+                var data = JSON.parse(response);
+                var length = 0;
+
+
+            });
