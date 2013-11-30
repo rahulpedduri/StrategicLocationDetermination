@@ -1,3 +1,7 @@
+/*
+*Author : Jagan Vujjini
+*/
+
 package beans;
 
 public class Competitors {
